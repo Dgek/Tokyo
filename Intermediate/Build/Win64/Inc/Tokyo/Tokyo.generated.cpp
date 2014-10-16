@@ -11,6 +11,9 @@ void EmptyLinkFunctionForGeneratedCodeTokyo() {}
 	void APlayerCharacter::StaticRegisterNativesAPlayerCharacter()
 	{
 		FNativeFunctionRegistrar::RegisterFunction(APlayerCharacter::StaticClass(),"MoveRight",(Native)&APlayerCharacter::execMoveRight);
+		FNativeFunctionRegistrar::RegisterFunction(APlayerCharacter::StaticClass(),"OnFire",(Native)&APlayerCharacter::execOnFire);
+		FNativeFunctionRegistrar::RegisterFunction(APlayerCharacter::StaticClass(),"OnStartJump",(Native)&APlayerCharacter::execOnStartJump);
+		FNativeFunctionRegistrar::RegisterFunction(APlayerCharacter::StaticClass(),"OnStopJump",(Native)&APlayerCharacter::execOnStopJump);
 	}
 	IMPLEMENT_CLASS(APlayerCharacter);
 	void APlayingGameMode::StaticRegisterNativesAPlayingGameMode()
@@ -23,6 +26,7 @@ void EmptyLinkFunctionForGeneratedCodeTokyo() {}
 	IMPLEMENT_CLASS(APlayingHUD);
 	void AProjectile::StaticRegisterNativesAProjectile()
 	{
+		FNativeFunctionRegistrar::RegisterFunction(AProjectile::StaticClass(),"OnHit",(Native)&AProjectile::execOnHit);
 	}
 	IMPLEMENT_CLASS(AProjectile);
 	void AFireBomb::StaticRegisterNativesAFireBomb()
@@ -40,18 +44,30 @@ void EmptyLinkFunctionForGeneratedCodeTokyo() {}
 #if USE_COMPILED_IN_NATIVES
 // Cross Module References
 	ENGINE_API class UClass* Z_Construct_UClass_ACharacter();
+	ENGINE_API class UClass* Z_Construct_UClass_UCameraComponent_NoRegister();
+	ENGINE_API class UClass* Z_Construct_UClass_USkeletalMeshComponent_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_AGameMode();
 	ENGINE_API class UClass* Z_Construct_UClass_AHUD();
+	ENGINE_API class UScriptStruct* Z_Construct_UScriptStruct_UEngineTypes_FHitResult();
+	COREUOBJECT_API class UScriptStruct* Z_Construct_UScriptStruct_UObject_FVector();
+	ENGINE_API class UClass* Z_Construct_UClass_UPrimitiveComponent_NoRegister();
+	ENGINE_API class UClass* Z_Construct_UClass_AActor_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_AActor();
+	ENGINE_API class UClass* Z_Construct_UClass_UProjectileMovementComponent_NoRegister();
+	ENGINE_API class UClass* Z_Construct_UClass_USphereComponent_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_APlayerController();
 
 	TOKYO_API class UFunction* Z_Construct_UFunction_APlayerCharacter_MoveRight();
+	TOKYO_API class UFunction* Z_Construct_UFunction_APlayerCharacter_OnFire();
+	TOKYO_API class UFunction* Z_Construct_UFunction_APlayerCharacter_OnStartJump();
+	TOKYO_API class UFunction* Z_Construct_UFunction_APlayerCharacter_OnStopJump();
 	TOKYO_API class UClass* Z_Construct_UClass_APlayerCharacter_NoRegister();
 	TOKYO_API class UClass* Z_Construct_UClass_APlayerCharacter();
 	TOKYO_API class UClass* Z_Construct_UClass_APlayingGameMode_NoRegister();
 	TOKYO_API class UClass* Z_Construct_UClass_APlayingGameMode();
 	TOKYO_API class UClass* Z_Construct_UClass_APlayingHUD_NoRegister();
 	TOKYO_API class UClass* Z_Construct_UClass_APlayingHUD();
+	TOKYO_API class UFunction* Z_Construct_UFunction_AProjectile_OnHit();
 	TOKYO_API class UClass* Z_Construct_UClass_AProjectile_NoRegister();
 	TOKYO_API class UClass* Z_Construct_UClass_AProjectile();
 	TOKYO_API class UClass* Z_Construct_UClass_AFireBomb_NoRegister();
@@ -83,6 +99,54 @@ void EmptyLinkFunctionForGeneratedCodeTokyo() {}
 		}
 		return ReturnFunction;
 	}
+	UFunction* Z_Construct_UFunction_APlayerCharacter_OnFire()
+	{
+		UClass* OuterClass=Z_Construct_UClass_APlayerCharacter();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(OuterClass, TEXT("OnFire"), RF_Public|RF_Transient|RF_Native) UFunction(FPostConstructInitializeProperties(), NULL, 0x00020401, 65535);
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("PlayerCharacter.h"));
+#endif
+		}
+		return ReturnFunction;
+	}
+	UFunction* Z_Construct_UFunction_APlayerCharacter_OnStartJump()
+	{
+		UClass* OuterClass=Z_Construct_UClass_APlayerCharacter();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(OuterClass, TEXT("OnStartJump"), RF_Public|RF_Transient|RF_Native) UFunction(FPostConstructInitializeProperties(), NULL, 0x00020401, 65535);
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("PlayerCharacter.h"));
+#endif
+		}
+		return ReturnFunction;
+	}
+	UFunction* Z_Construct_UFunction_APlayerCharacter_OnStopJump()
+	{
+		UClass* OuterClass=Z_Construct_UClass_APlayerCharacter();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(OuterClass, TEXT("OnStopJump"), RF_Public|RF_Transient|RF_Native) UFunction(FPostConstructInitializeProperties(), NULL, 0x00020401, 65535);
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("PlayerCharacter.h"));
+#endif
+		}
+		return ReturnFunction;
+	}
 	UClass* Z_Construct_UClass_APlayerCharacter_NoRegister()
 	{
 		return APlayerCharacter::StaticClass();
@@ -99,14 +163,30 @@ void EmptyLinkFunctionForGeneratedCodeTokyo() {}
 			OuterClass->ClassFlags |= 0x00900080;
 
 			OuterClass->LinkChild(Z_Construct_UFunction_APlayerCharacter_MoveRight());
+			OuterClass->LinkChild(Z_Construct_UFunction_APlayerCharacter_OnFire());
+			OuterClass->LinkChild(Z_Construct_UFunction_APlayerCharacter_OnStartJump());
+			OuterClass->LinkChild(Z_Construct_UFunction_APlayerCharacter_OnStopJump());
 
+			UProperty* NewProp_CustomCameraComponent = new(OuterClass, TEXT("CustomCameraComponent"), RF_Public|RF_Transient|RF_Native) UObjectProperty(CPP_PROPERTY_BASE(CustomCameraComponent, APlayerCharacter), 0x00000800044a001d, Z_Construct_UClass_UCameraComponent_NoRegister());
+			UProperty* NewProp_ProjectileClass = new(OuterClass, TEXT("ProjectileClass"), RF_Public|RF_Transient|RF_Native) UClassProperty(CPP_PROPERTY_BASE(ProjectileClass, APlayerCharacter), 0x0000000000000005, Z_Construct_UClass_AProjectile_NoRegister());
+			UProperty* NewProp_MeshComponent = new(OuterClass, TEXT("MeshComponent"), RF_Public|RF_Transient|RF_Native) UObjectProperty(CPP_PROPERTY_BASE(MeshComponent, APlayerCharacter), 0x00000000044b0009, Z_Construct_UClass_USkeletalMeshComponent_NoRegister());
 			OuterClass->AddFunctionToFunctionMap(Z_Construct_UFunction_APlayerCharacter_MoveRight());
+			OuterClass->AddFunctionToFunctionMap(Z_Construct_UFunction_APlayerCharacter_OnFire());
+			OuterClass->AddFunctionToFunctionMap(Z_Construct_UFunction_APlayerCharacter_OnStartJump());
+			OuterClass->AddFunctionToFunctionMap(Z_Construct_UFunction_APlayerCharacter_OnStopJump());
 			OuterClass->StaticLink();
 #if WITH_METADATA
 			UMetaData* MetaData = OuterClass->GetOutermost()->GetMetaData();
 			MetaData->SetValue(OuterClass, TEXT("HideCategories"), TEXT("Navigation AI|Navigation Pawn|Character|InternalEvents"));
 			MetaData->SetValue(OuterClass, TEXT("IncludePath"), TEXT("PlayerCharacter.h"));
 			MetaData->SetValue(OuterClass, TEXT("ModuleRelativePath"), TEXT("PlayerCharacter.h"));
+			MetaData->SetValue(NewProp_CustomCameraComponent, TEXT("Category"), TEXT("Camera"));
+			MetaData->SetValue(NewProp_CustomCameraComponent, TEXT("ModuleRelativePath"), TEXT("PlayerCharacter.h"));
+			MetaData->SetValue(NewProp_CustomCameraComponent, TEXT("ToolTip"), TEXT("camera"));
+			MetaData->SetValue(NewProp_ProjectileClass, TEXT("Category"), TEXT("Projectile"));
+			MetaData->SetValue(NewProp_ProjectileClass, TEXT("ModuleRelativePath"), TEXT("PlayerCharacter.h"));
+			MetaData->SetValue(NewProp_MeshComponent, TEXT("Category"), TEXT("Mesh"));
+			MetaData->SetValue(NewProp_MeshComponent, TEXT("ModuleRelativePath"), TEXT("PlayerCharacter.h"));
 #endif
 		}
 		check(OuterClass->GetClass());
@@ -173,6 +253,37 @@ void EmptyLinkFunctionForGeneratedCodeTokyo() {}
 		return OuterClass;
 	}
 	static FCompiledInDefer Z_CompiledInDefer_UClass_APlayingHUD(Z_Construct_UClass_APlayingHUD);
+	UFunction* Z_Construct_UFunction_AProjectile_OnHit()
+	{
+		struct Projectile_eventOnHit_Parms
+		{
+			class AActor* OtherActor;
+			class UPrimitiveComponent* OtherComp;
+			FVector NormalImpulse;
+			struct FHitResult Hit;
+		};
+		UClass* OuterClass=Z_Construct_UClass_AProjectile();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(OuterClass, TEXT("OnHit"), RF_Public|RF_Transient|RF_Native) UFunction(FPostConstructInitializeProperties(), NULL, 0x00C20400, 65535, sizeof(Projectile_eventOnHit_Parms));
+			UProperty* NewProp_Hit = new(ReturnFunction, TEXT("Hit"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(Hit, Projectile_eventOnHit_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_UEngineTypes_FHitResult());
+			UProperty* NewProp_NormalImpulse = new(ReturnFunction, TEXT("NormalImpulse"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(NormalImpulse, Projectile_eventOnHit_Parms), 0x0000000000000080, Z_Construct_UScriptStruct_UObject_FVector());
+			UProperty* NewProp_OtherComp = new(ReturnFunction, TEXT("OtherComp"), RF_Public|RF_Transient|RF_Native) UObjectProperty(CPP_PROPERTY_BASE(OtherComp, Projectile_eventOnHit_Parms), 0x0000000004080080, Z_Construct_UClass_UPrimitiveComponent_NoRegister());
+			UProperty* NewProp_OtherActor = new(ReturnFunction, TEXT("OtherActor"), RF_Public|RF_Transient|RF_Native) UObjectProperty(CPP_PROPERTY_BASE(OtherActor, Projectile_eventOnHit_Parms), 0x0000000000000080, Z_Construct_UClass_AActor_NoRegister());
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("Projectile.h"));
+			MetaData->SetValue(NewProp_Hit, TEXT("ModuleRelativePath"), TEXT("Projectile.h"));
+			MetaData->SetValue(NewProp_NormalImpulse, TEXT("ModuleRelativePath"), TEXT("Projectile.h"));
+			MetaData->SetValue(NewProp_OtherComp, TEXT("ModuleRelativePath"), TEXT("Projectile.h"));
+			MetaData->SetValue(NewProp_OtherActor, TEXT("ModuleRelativePath"), TEXT("Projectile.h"));
+#endif
+		}
+		return ReturnFunction;
+	}
 	UClass* Z_Construct_UClass_AProjectile_NoRegister()
 	{
 		return AProjectile::StaticClass();
@@ -188,12 +299,21 @@ void EmptyLinkFunctionForGeneratedCodeTokyo() {}
 			UObjectForceRegistration(OuterClass);
 			OuterClass->ClassFlags |= 0x00900080;
 
+			OuterClass->LinkChild(Z_Construct_UFunction_AProjectile_OnHit());
 
+			UProperty* NewProp_ProjectileMovement = new(OuterClass, TEXT("ProjectileMovement"), RF_Public|RF_Transient|RF_Native) UObjectProperty(CPP_PROPERTY_BASE(ProjectileMovement, AProjectile), 0x00000000044a001d, Z_Construct_UClass_UProjectileMovementComponent_NoRegister());
+			UProperty* NewProp_CollisionComp = new(OuterClass, TEXT("CollisionComp"), RF_Public|RF_Transient|RF_Native) UObjectProperty(CPP_PROPERTY_BASE(CollisionComp, AProjectile), 0x00000000044b0009, Z_Construct_UClass_USphereComponent_NoRegister());
+			OuterClass->AddFunctionToFunctionMap(Z_Construct_UFunction_AProjectile_OnHit());
 			OuterClass->StaticLink();
 #if WITH_METADATA
 			UMetaData* MetaData = OuterClass->GetOutermost()->GetMetaData();
 			MetaData->SetValue(OuterClass, TEXT("IncludePath"), TEXT("Projectile.h"));
 			MetaData->SetValue(OuterClass, TEXT("ModuleRelativePath"), TEXT("Projectile.h"));
+			MetaData->SetValue(NewProp_ProjectileMovement, TEXT("Category"), TEXT("Movement"));
+			MetaData->SetValue(NewProp_ProjectileMovement, TEXT("ModuleRelativePath"), TEXT("Projectile.h"));
+			MetaData->SetValue(NewProp_CollisionComp, TEXT("Category"), TEXT("Projectile"));
+			MetaData->SetValue(NewProp_CollisionComp, TEXT("ModuleRelativePath"), TEXT("Projectile.h"));
+			MetaData->SetValue(NewProp_CollisionComp, TEXT("ToolTip"), TEXT("collision component"));
 #endif
 		}
 		check(OuterClass->GetClass());
@@ -294,8 +414,8 @@ void EmptyLinkFunctionForGeneratedCodeTokyo() {}
 			ReturnPackage = CastChecked<UPackage>(StaticFindObjectFast(UPackage::StaticClass(), NULL, FName(TEXT("/Script/Tokyo")), false, false));
 			ReturnPackage->PackageFlags |= PKG_CompiledIn | 0x00000000;
 			FGuid Guid;
-			Guid.A = 0x81D7C8A4;
-			Guid.B = 0xD8648193;
+			Guid.A = 0xC17C11EB;
+			Guid.B = 0x0C3D5FC1;
 			Guid.C = 0x00000000;
 			Guid.D = 0x00000000;
 			ReturnPackage->SetGuid(Guid);

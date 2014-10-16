@@ -14,10 +14,30 @@ class TOKYO_API APlayerCharacter : public ACharacter
 	GENERATED_UCLASS_BODY()
 
 	UFUNCTION()
+	void OnStartJump();
+
+	UFUNCTION()
+	void OnStopJump();
+
+	UFUNCTION()
 	void MoveRight(float Val);
+	
+	UFUNCTION()
+	void OnFire();
+
+public:
+
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+	TSubobjectPtr<USkeletalMeshComponent> MeshComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile)
+	TSubclassOf<class AProjectile> ProjectileClass;
 
 protected:
-	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
-	
+	//camera
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+	TSubobjectPtr<UCameraComponent> CustomCameraComponent;
+
+	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 };

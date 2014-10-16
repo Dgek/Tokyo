@@ -14,6 +14,21 @@
 
 #define APlayerCharacter_EVENTPARMS
 #define APlayerCharacter_RPC_WRAPPERS \
+	DECLARE_FUNCTION(execOnStopJump) \
+	{ \
+		P_FINISH; \
+		this->OnStopJump(); \
+	} \
+	DECLARE_FUNCTION(execOnStartJump) \
+	{ \
+		P_FINISH; \
+		this->OnStartJump(); \
+	} \
+	DECLARE_FUNCTION(execOnFire) \
+	{ \
+		P_FINISH; \
+		this->OnFire(); \
+	} \
 	DECLARE_FUNCTION(execMoveRight) \
 	{ \
 		P_GET_PROPERTY(UFloatProperty,Val); \

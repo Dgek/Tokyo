@@ -13,7 +13,18 @@
 #define TOKYO_Projectile_generated_h
 
 #define AProjectile_EVENTPARMS
-#define AProjectile_RPC_WRAPPERS
+#define AProjectile_RPC_WRAPPERS \
+	DECLARE_FUNCTION(execOnHit) \
+	{ \
+		P_GET_OBJECT(AActor,OtherActor); \
+		P_GET_OBJECT(UPrimitiveComponent,OtherComp); \
+		P_GET_STRUCT(FVector,NormalImpulse); \
+		P_GET_STRUCT_REF(struct FHitResult,Out_Hit); \
+		P_FINISH; \
+		this->OnHit(OtherActor,OtherComp,NormalImpulse,Out_Hit); \
+	}
+
+
 #define AProjectile_CALLBACK_WRAPPERS
 #define AProjectile_INCLASS \
 	private: \

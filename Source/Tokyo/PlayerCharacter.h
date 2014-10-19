@@ -21,6 +21,9 @@ class TOKYO_API APlayerCharacter : public ACharacter
 
 	UFUNCTION()
 	void MoveRight(float Val);
+
+	UFUNCTION()
+	void Turn();
 	
 	UFUNCTION()
 	void OnFire();
@@ -40,4 +43,7 @@ protected:
 	TSubobjectPtr<UCameraComponent> CustomCameraComponent;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+
+	//Change direction in which character is looking at
+	void ChangeDirection();
 };

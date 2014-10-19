@@ -24,6 +24,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* InputComponent
 	InputComponent->BindAction("Jump", IE_Pressed, this, &APlayerCharacter::OnStartJump);
 	InputComponent->BindAction("Jump", IE_Released, this, &APlayerCharacter::OnStopJump);
 	InputComponent->BindAction("Fire", IE_Pressed, this, &APlayerCharacter::OnFire);
+	InputComponent->BindAction("Turn", IE_Pressed, this, &APlayerCharacter::Turn);
 }
 
 void APlayerCharacter::MoveRight(float Value)
@@ -66,4 +67,9 @@ void APlayerCharacter::OnFire()
 			Projectile->InitVelocity(LaunchDir);
 		}
 	}
+}
+
+void APlayerCharacter::Turn()
+{
+
 }
